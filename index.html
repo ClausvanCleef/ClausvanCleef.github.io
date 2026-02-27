@@ -3,9 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>Claus van Cleef</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #2a1f1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .overlay {
+            position: fixed;
+            top: 2rem;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: clamp(2rem, 6vw, 5rem);
+            text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+            z-index: 1;
+        }
+        img {
+            display: block;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World</h1>
+    <div class="overlay">Claus van Cleef</div>
+    <img src="img/pansen.jpeg" alt="Claus van Cleef">
 </body>
 </html>
