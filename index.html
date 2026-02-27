@@ -1,38 +1,252 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claus van Cleef</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             background: #2a1f1a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            color: #e8ddd3;
+            font-family: Georgia, 'Times New Roman', serif;
         }
-        .overlay {
+
+        /* --- Language toggle --- */
+        .lang-toggle {
             position: fixed;
-            top: 2rem;
-            left: 0;
-            right: 0;
-            text-align: center;
-            color: #fff;
-            font-family: Georgia, serif;
-            font-size: clamp(2rem, 6vw, 5rem);
-            text-shadow: 0 2px 12px rgba(0,0,0,0.7);
-            z-index: 1;
+            top: 1rem;
+            right: 1.5rem;
+            z-index: 10;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
         }
-        img {
+        .lang-toggle button {
+            background: none;
+            border: none;
+            color: #e8ddd3;
+            font-family: inherit;
+            font-size: inherit;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+        .lang-toggle button.active { opacity: 1; }
+        .lang-toggle span { opacity: 0.4; margin: 0 0.3em; }
+
+        /* --- Hero --- */
+        .hero {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .hero img {
             display: block;
             width: 100%;
+            max-height: 45vh;
+            object-fit: cover;
         }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 5;
+            background: rgba(42,31,26,0.4);
+        }
+        .hero-overlay h1 {
+            font-size: clamp(2rem, 6vw, 4.5rem);
+            font-weight: normal;
+            letter-spacing: 0.04em;
+            color: #fff;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+        }
+        .hero-overlay .tagline {
+            margin-top: 0.4rem;
+            font-size: clamp(0.9rem, 2vw, 1.3rem);
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        /* --- Content sections --- */
+        .content {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem 4rem;
+        }
+
+        section { margin-bottom: 3rem; }
+
+        section h2 {
+            font-size: 1.4rem;
+            font-weight: normal;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(232,221,211,0.2);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        section p {
+            line-height: 1.7;
+            opacity: 0.85;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Event card --- */
+        .event-card {
+            border: 1px solid rgba(232,221,211,0.15);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .event-card .date {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.6;
+            margin-bottom: 0.5rem;
+        }
+        .event-card h3 {
+            font-size: 1.2rem;
+            font-weight: normal;
+            margin-bottom: 0.5rem;
+        }
+        .event-card .meta {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+        .event-card .cta {
+            display: inline-block;
+            padding: 0.6rem 1.8rem;
+            border: 1px solid #e8ddd3;
+            color: #e8ddd3;
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: background 0.2s, color 0.2s;
+        }
+        .event-card .cta:hover {
+            background: #e8ddd3;
+            color: #2a1f1a;
+        }
+
+        /* --- Nav --- */
+        nav {
+            text-align: center;
+            padding: 2rem 1rem 3rem;
+            border-top: 1px solid rgba(232,221,211,0.15);
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        nav a {
+            color: #e8ddd3;
+            text-decoration: none;
+            opacity: 0.6;
+            margin: 0 1rem;
+            transition: opacity 0.2s;
+        }
+        nav a:hover { opacity: 1; }
+
+        /* --- Language switching --- */
+        .en { display: none; }
+        body.lang-en .en { display: block; }
+        body.lang-en .de { display: none; }
+        span.en { display: none; }
+        body.lang-en span.en { display: inline; }
+        body.lang-en span.de { display: none; }
     </style>
 </head>
 <body>
-    <div class="overlay">Claus van Cleef</div>
-    <img src="img/pansen.jpeg" alt="Claus van Cleef">
+    <div class="lang-toggle">
+        <button class="active" onclick="setLang('de')">DE</button>
+        <span>/</span>
+        <button onclick="setLang('en')">EN</button>
+    </div>
+
+    <div class="hero">
+        <div class="hero-overlay">
+            <h1>Claus van Cleef</h1>
+            <div class="tagline">
+                <span class="de">Küche mit Seele — in Berlin</span>
+                <span class="en">Soulful cooking — in Berlin</span>
+            </div>
+        </div>
+        <img src="img/pansen.jpeg" alt="Claus van Cleef">
+    </div>
+
+    <div class="content">
+        <section>
+            <h2>
+                <span class="de">Über mich</span>
+                <span class="en">About</span>
+            </h2>
+            <p class="de">
+                Koch mit internationaler Erfahrung. Mein Stil: bodenständig, kreativ, nachhaltig.
+                In meinem alten Ladenlokal in Berlin — hohe Decken, offene Küche,
+                Pflanzen, Einmachgläser, Fermentiertes — koche ich für bis zu 15 Gäste.
+            </p>
+            <p class="en">
+                A chef with international experience. My style: down to earth, creative, sustainable.
+                In my old shop space in Berlin — high ceilings, open kitchen,
+                plants, jars of pickles, fermented goods — I cook for up to 15 guests.
+            </p>
+        </section>
+
+        <section>
+            <h2>
+                <span class="de">Nächstes Event</span>
+                <span class="en">Next Event</span>
+            </h2>
+            <div class="event-card">
+                <div class="date">
+                    <span class="de">28. März 2026 — 19:00 Uhr</span>
+                    <span class="en">March 28, 2026 — 7:00 PM</span>
+                </div>
+                <h3>
+                    <span class="de">Fermentation Dinner</span>
+                    <span class="en">Fermentation Dinner</span>
+                </h3>
+                <div class="meta">
+                    <span class="de">5 Gänge · 15 Plätze · 85 € pro Person</span>
+                    <span class="en">5 courses · 15 seats · €85 per person</span>
+                </div>
+                <a href="#" class="cta">
+                    <span class="de">Anmelden</span>
+                    <span class="en">Register</span>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="#">Events</a>
+        <a href="#">
+            <span class="de">Über mich</span>
+            <span class="en">About</span>
+        </a>
+        <a href="#">Impressum</a>
+    </nav>
+
+    <script>
+        function setLang(lang) {
+            document.body.className = lang === 'en' ? 'lang-en' : '';
+            document.documentElement.lang = lang;
+            document.querySelectorAll('.lang-toggle button').forEach(function(btn) {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+            });
+        }
+    </script>
 </body>
 </html>
